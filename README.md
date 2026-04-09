@@ -1,6 +1,7 @@
 # 🌐 Web Local Remote
 
-![Hero](web_local_remote_hero_1775753412251.png)
+<img width="713" height="1096" alt="image" src="https://github.com/user-attachments/assets/3e1c15a3-e58a-42f8-bde0-f19c457e51ad" />
+<img width="711" height="1089" alt="image" src="https://github.com/user-attachments/assets/10a79ef0-553e-4ecf-ba33-10f5078b792c" />
 
 **Web Local Remote**는 Unity 에디터에서 WebGL 빌드를 즉시 테스트할 수 있는 강력한 로컬 서버 확장 도구입니다. 네이티브 HTTPS 지원과 QR 코드를 통한 즉각적인 모바일 원격 디버깅 기능을 제공하며, 별도의 터널링 프로그램이나 복잡한 설정 없이 바로 사용할 수 있습니다.
 
