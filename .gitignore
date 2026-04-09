@@ -1,0 +1,46 @@
+# This .gitignore file is for a Unity project.
+#
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Mm]emoryCaptures/
+
+# Asset meta files must be tracked
+!/[Aa]ssets/**/*.meta
+
+# Unity generated folder
+/UnityGenerated/
+
+# Visual Studio / Rider / Idea generated files
+.vs/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svclog
+*.pdb
+*.opendb
+*.VC.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# --- Web Local Remote Specific ---
+# IMPORTANT: Protect your SSL private keys and certificates
+.cert/
+.cert.meta
+# --- End Web Local Remote Specific ---

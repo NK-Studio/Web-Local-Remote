@@ -1,0 +1,21 @@
+{
+    "m_Dictionary": {
+        "m_DictionaryValues": [
+            {
+                "type": "System.Collections.Generic.List`1[[Unity.Web.Stripping.Editor.WebBuildReport, Unity.Web.Stripping.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "WebBuildReportList.Builds",
+                "value": "{\"m_Value\":[{\"m_BuildGuid\":\"8faea568b985483d851ba2b19825cfea\",\"Name\":\"Builds\",\"OutputPath\":\"E:/0.Project/1.unity/Web-Local-Remote/Builds\",\"LastModifiedAtUniversal\":\"2026-04-09 오후 3:23:26\",\"OriginalWasmSize\":11141574,\"StrippedWasmSize\":0,\"WasmFilePath\":\"E:/0.Project/1.unity/Web-Local-Remote/Builds\\\\Build\\\\Builds.wasm.br\",\"WasmBackupFilePath\":\"\",\"SymbolFilePath\":\"\",\"StrippingInfoFilePath\":\"\",\"PlayerSettingsFilePath\":\"\",\"MethodMapFilePath\":\"\",\"FrameworkFilePath\":\"E:/0.Project/1.unity/Web-Local-Remote/Builds\\\\Build\\\\Builds.framework.js.br\",\"FrameworkBackupFilePath\":\"\",\"AdditionalFiles\":[],\"HasSubmoduleProfiling\":false,\"OriginalPlayerSettingsFilePath\":\"E:\\\\0.Project\\\\1.unity\\\\Web-Local-Remote\\\\Library\\\\com.unity.web.stripping-tool\\\\Builds-8faea568b985483d851ba2b19825cfea\\\\original_player_settings.json\"}]}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "SubmoduleStrippingWindow.LastBuildPath",
+                "value": "{\"m_Value\":\"E:/0.Project/1.unity/Web-Local-Remote/Builds\"}"
+            },
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "SubmoduleSelectionWindow.LastProfilingDataPath",
+                "value": "{\"m_Value\":\"C:/Users/bnm00/Downloads/submodule_report (2).json\"}"
+            }
+        ]
+    }
+}

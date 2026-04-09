@@ -1,0 +1,228 @@
+/* Root and Typography */
+.container {
+    flex-grow: 1;
+    background-color: var(--unity-colors-window-background);
+    padding: 16px;
+}
+
+/* Header Section */
+.header-title-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+.header-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.header-subtitle {
+    font-size: 11px;
+    color: #999999;
+    margin-top: -2px;
+}
+
+/* ── 타이틀 ──────────────────────────────────────────────── */
+.TitleStyle {
+    -unity-text-align: middle-center;
+    font-size: 18px;
+    padding-left: 0;
+    padding-right: 0;
+    -unity-font-style: bold;
+}
+.TitleStyle:hover { cursor: link; }
+
+.icon-button {
+    background-color: transparent;
+    border-width: 0;
+    font-size: 14px;
+    padding: 2px;
+    cursor: link;
+}
+.icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.settings-pos {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+}
+
+/* ── 그룹 박스 ───────────────────────────────────────────── */
+.GroupBoxStyle {
+    padding: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 1px;
+    border-color: rgba(255, 255, 255, 0.2);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#settings-view {
+}
+
+.GroupBoxStyle > Label {
+    -unity-font-style: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #cccccc;
+}
+
+/* Status Indicator */
+.status-box {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+.status-text { font-size: 12px; color: #cccccc; margin-right: 6px; }
+.status-dot { width: 10px; height: 10px; border-radius: 5px; }
+.status-online { background-color: #66e070; }
+.status-offline { background-color: #888888; }
+.status-error { background-color: #ff5555; }
+
+/* Separator */
+.separator {
+    height: 1px;
+    background-color: rgba(255,255,255,0.1);
+    margin-bottom: 16px;
+}
+
+/* Missing WebGL View */
+.missing-module-view {
+    padding: 20px;
+    background-color: rgba(255, 85, 85, 0.1);
+    border-color: #ff5555;
+    border-width: 1px;
+    border-radius: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.missing-module-title { font-size: 16px; -unity-font-style: bold; color: #ff6b6b; margin-bottom: 4px; }
+.missing-module-desc { font-size: 12px; color: #dddddd; white-space: normal; -unity-text-align: middle-center; }
+
+.main-content { 
+    flex-grow: 1; 
+}
+
+/* Build Path Group */
+.build-path-group {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.build-path-field {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 50px;
+    margin-right: 8px;
+}
+.build-path-field > .unity-base-field__input {
+    border-radius: 4px;
+    min-height: 22px;
+}
+
+/* Button Stylings */
+.secondary-btn {
+    padding: 4px 12px;
+    background-color: #3a3a3a;
+    border-color: #4a4a4a;
+    border-radius: 4px;
+    color: #eeeeee;
+    min-height: 24px;
+    flex-shrink: 0;
+}
+.secondary-btn:hover { background-color: #4a4a4a; }
+
+#generate-cert-btn {
+    cursor: link;
+}
+
+.danger-btn { background-color: #5c2b2b; border-color: #8a3c3c; color: #ffaaaa; }
+.danger-btn:hover { background-color: #8a3c3c; }
+
+/* ── ButtonStyle ───────────────────────────────────── */
+.ButtonStyle {
+    font-size: 16px;
+    max-width: 480px;
+    min-height: 30px;
+    -unity-font-style: normal;
+    margin: 3px 5px;
+    margin-top: 6px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    width: 100%;
+    align-self: center;
+    border-width: 0;
+    color: #ffffff;
+}
+
+.ButtonStyle:active { background-color: var(--unity-colors-default-background); }
+.ButtonStyle:disabled { background-color: rgba(0, 0, 0, 0.08); }
+
+.run-button { background-color: #2980b9; }
+.run-button:hover { background-color: #3498db; }
+.stop-button { background-color: #c0392b; border-color:#e74c3c; border-width: 2px;}
+.stop-button:hover { background-color: #e74c3c; }
+
+/* QR Code Section */
+.qr-box {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    align-items: center;
+    justify-content: center;
+    max-width: 220px;
+    align-self: center;
+}
+.qr-image {
+    width: 200px;
+    height: 200px;
+    max-width: 100%;
+    max-height: 100%;
+    -unity-background-scale-mode: scale-to-fit;
+}
+.qr-desc { font-size: 12px; color: #aaaaaa; margin-bottom: 8px; }
+.url-text { font-size: 14px; -unity-font-style: bold; color: #5dade2; }
+
+/* ── Help Box & Warnings ────────────────────────────────── */
+.help-box {
+    background-color: rgba(0, 120, 215, 0.1);
+    border-color: rgba(0, 120, 215, 0.3);
+    border-width: 1px;
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+}
+.help-box-text {
+    font-size: 11px;
+    color: #bbbbbb;
+    white-space: normal;
+}
+.ssl-warning {
+    color: #ff5555;
+    font-size: 11px;
+    -unity-font-style: bold;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    white-space: normal;
+}
