@@ -1,0 +1,16 @@
+{
+  "name": "com.nkstudio.weblocalremote",
+  "version": "1.0.0",
+  "displayName": "Web Local Remote",
+  "description": "WebGL Local Server and Remote Debugging Tool.",
+  "unity": "6000.2",
+  "author": {
+    "name": "NK Studio"
+  },
+  "keywords": [
+    "webgl",
+    "server",
+    "remote",
+    "debug"
+  ]
+}

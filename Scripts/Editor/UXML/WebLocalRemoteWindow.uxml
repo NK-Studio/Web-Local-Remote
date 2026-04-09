@@ -1,0 +1,70 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement class="container">
+        <ui:Button name="settings-toggle-btn" text="⚙️" class="icon-button settings-pos" tooltip="Toggle HTTPS Settings"/>
+        <ui:VisualElement class="header-title-container">
+            <ui:Label name="header-title" text="Web Remote" class="TitleStyle" style="margin-bottom: 0; padding-bottom: 0;"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="header-container">
+            <ui:Label text="by NK Studio" class="header-subtitle" style="flex-grow: 1;"/>
+            <ui:VisualElement class="status-box">
+                <ui:Label name="status-text" text="Offline" class="status-text"/>
+                <ui:VisualElement name="status-dot" class="status-dot status-offline"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="separator"/>
+        <ui:VisualElement name="settings-view" class="GroupBoxStyle" style="display: none; background-color: rgba(0, 0, 0, 0.2);">
+            <ui:Label text="Server Settings"/>
+            <ui:VisualElement class="build-path-group" style="margin-bottom: 10px;">
+                <ui:Label text="PORT" style="width: 40px; -unity-text-align: middle-left;"/>
+                <uie:IntegerField name="port-field" value="8080" class="build-path-field" style="flex-grow: 1;"/>
+            </ui:VisualElement>
+            <ui:Label text="SSL Certificate Settings (HTTPS)" style="margin-top: 5px;"/>
+            <ui:VisualElement class="build-path-group" style="margin-bottom: 5px;">
+                <ui:Label text="CERT" style="width: 40px; -unity-text-align: middle-left;"/>
+                <ui:TextField name="cert-path-field" readonly="true" class="build-path-field" style="flex-grow: 1;"/>
+                <ui:Button text="..." name="select-cert-btn" class="secondary-btn" style="min-width: 28px; width: 28px;"/>
+                <ui:Button text="X" name="clear-cert-btn" class="secondary-btn danger-btn" style="min-width: 25px; width: 25px; margin-left: 2px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="build-path-group">
+                <ui:Label text="KEY" style="width: 40px; -unity-text-align: middle-left;"/>
+                <ui:TextField name="key-path-field" readonly="true" class="build-path-field" style="flex-grow: 1;"/>
+                <ui:Button text="..." name="select-key-btn" class="secondary-btn" style="min-width: 28px; width: 28px;"/>
+                <ui:Button text="X" name="clear-key-btn" class="secondary-btn danger-btn" style="min-width: 25px; width: 25px; margin-left: 2px;"/>
+            </ui:VisualElement>
+            <ui:Label name="ssl-warning-label" text="⚠️ Certificate files not found! Falling back to HTTP." class="ssl-warning" style="display: none;"/>
+            <ui:Button text="Auto Generate SSL (.cert)" name="generate-cert-btn" class="secondary-btn" style="margin-top: 8px; background-color: #2b5c3d; border-color: #3c8a52; color: #aaffaa;"/>
+            
+            <ui:VisualElement class="help-box">
+                <ui:Label name="help-box-security" text="🔒 Security: Private certificates in .cert/ should be added to .gitignore." class="help-box-text"/>
+                <ui:Label name="help-box-performance" text="🚀 Performance: GZip/Brotli compression requires HTTPS to function correctly on most mobile browsers." class="help-box-text" style="margin-top: 4px;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="missing-module-view" class="missing-module-view" style="display: none;">
+            <ui:Label text="⚠️ WebGL 모듈이 필요합니다!" class="missing-module-title"/>
+            <ui:Label text="Unity Hub에서 현재 버전에 대한 WebGL Build Support를 설치해주세요." class="missing-module-desc"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="main-content-view" class="main-content">
+            <ui:VisualElement class="GroupBoxStyle">
+                <ui:Label text="Build Settings"/>
+                <ui:VisualElement class="build-path-group">
+                    <ui:TextField name="build-path" readonly="true" class="build-path-field"/>
+                    <ui:Button text="Browse Folder" name="select-path-btn" class="secondary-btn"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="GroupBoxStyle">
+                <ui:Label text="Server Controls"/>
+                <ui:VisualElement class="button-group">
+                    <ui:Button name="toggle-server-btn" text="▶ Run" class="ButtonStyle run-button"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="qr-container" class="GroupBoxStyle" style="display: none; align-items: center; justify-content: center;">
+                <ui:Label text="Scan the QR Code to connect from mobile" class="qr-desc"/>
+                <ui:VisualElement class="qr-box">
+                    <ui:Image name="qr-image" class="qr-image"/>
+                </ui:VisualElement>
+                <ui:Label name="url-label" text="http://0.0.0.0:8080" selectable="true" class="url-text"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
