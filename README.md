@@ -25,11 +25,8 @@
 **Unity Package Manager**에서 **"Add package from git URL..."**을 선택한 후 아래 주소를 입력하세요:
 
 ```text
-https://github.com/NK-Studio/Web-Local-Remote.git?path=/Assets/Plugins/Web Local Remote
+https://github.com/NK-Studio/Web-Local-Remote.git#upm
 ```
-
-> [!IMPORTANT]
-> 이 패키지는 로컬 프로젝트 관리 편의를 위해 서브 폴더 내에 유지되고 있으므로, 주소 뒤의 `?path=` 쿼리 파라미터가 반드시 포함되어야 합니다.
 
 ---
 
@@ -47,7 +44,7 @@ https://github.com/NK-Studio/Web-Local-Remote.git?path=/Assets/Plugins/Web Local
 
 ## 📜 요구 사양
 
-*   **Unity**: 6.2 이상 버전 권장
+*   **Unity**: 6000.2 이상 버전 권장 (Unity 6)
 *   **Module**: WebGL Build Support 모듈이 설치되어 있어야 합니다.
 *   **Platform**: Windows 지원 (MacOS/Linux 지원 예정)
 

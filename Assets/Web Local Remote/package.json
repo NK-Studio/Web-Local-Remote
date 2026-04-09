@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "displayName": "Web Local Remote",
   "description": "WebGL Local Server and Remote Debugging Tool.",
-  "unity": "2019.4",
+  "unity": "6000.2",
   "author": {
     "name": "NK Studio"
   },
