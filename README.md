@@ -46,7 +46,7 @@ https://github.com/NK-Studio/Web-Local-Remote.git#upm
 
 *   **Unity**: 6000.2 이상 버전 권장 (Unity 6)
 *   **Module**: WebGL Build Support 모듈이 설치되어 있어야 합니다.
-*   **Platform**: Windows 지원 (MacOS/Linux 지원 예정)
+*   **Platform**: Windows, macOS 지원 (Linux 지원 계획 없음)
 
 ---
 
