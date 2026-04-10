@@ -288,9 +288,17 @@ namespace WebLocalRemote
 #if UNITY_EDITOR_WIN
             executablePath = Path.Combine(EditorApplication.applicationContentsPath,
                 "PlaybackEngines/WebGLSupport/BuildTools/Emscripten/node/node.exe");
+#elif UNITY_EDITOR_OSX
+            // On macOS, applicationContentsPath is Unity.app/Contents.
+            // PlaybackEngines is sibling to Unity.app.
+            executablePath = Path.GetFullPath(Path.Combine(EditorApplication.applicationContentsPath, "..", "..", "PlaybackEngines/WebGLSupport/BuildTools/Emscripten/node/node"));
+
+            if (!File.Exists(executablePath))
+            {
+                executablePath = Path.GetFullPath(Path.Combine(EditorApplication.applicationContentsPath, "..", "..", "PlaybackEngines/WebGLSupport/BuildTools/Emscripten/node"));
+            }
 #else
-        executablePath =
- Path.Combine(EditorApplication.applicationContentsPath, "PlaybackEngines/WebGLSupport/BuildTools/Emscripten/node/node");
+            executablePath = Path.Combine(EditorApplication.applicationContentsPath, "PlaybackEngines/WebGLSupport/BuildTools/Emscripten/node/node");
 #endif
 
             if (!File.Exists(executablePath))
