@@ -16,7 +16,8 @@
             <ui:Label text="Server Settings"/>
             <ui:VisualElement class="build-path-group" style="margin-bottom: 10px;">
                 <ui:Label text="PORT" style="width: 40px; -unity-text-align: middle-left;"/>
-                <uie:IntegerField name="port-field" value="8080" class="build-path-field" style="flex-grow: 1;"/>
+                <uie:IntegerField name="port-field" value="8080" is-delayed="true" class="build-path-field" style="flex-grow: 1;"/>
+                <ui:Button text="Reset" name="reset-port-btn" class="secondary-btn" tooltip="기본 포트(8080)로 되돌리기"/>
             </ui:VisualElement>
             <ui:Label text="SSL Certificate Settings (HTTPS)" style="margin-top: 5px;"/>
             <ui:VisualElement class="build-path-group" style="margin-bottom: 5px;">
