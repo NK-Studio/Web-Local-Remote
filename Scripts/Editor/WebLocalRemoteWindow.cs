@@ -31,6 +31,8 @@ namespace WebLocalRemote
         private Image _qrImageElement;
         private Label _urlLabel;
         private Button _toggleBtn;
+        private IntegerField _portField;
+        private Button _resetPortBtn;
         private Texture2D _qrTexture;
 
         private const string PrefPid = "WebLocalRemote_ServerPID";
@@ -38,6 +40,9 @@ namespace WebLocalRemote
         private const string PrefCertPath = "WebLocalRemote_CertPath";
         private const string PrefKeyPath = "WebLocalRemote_KeyPath";
         private const string PrefPort = "WebLocalRemote_ServerPort";
+        private const int DefaultPort = 8080;
+        private const int MinPort = 1024; // Well-known 포트 예약 방지
+        private const int MaxPort = 65535;
 
         [MenuItem("Tools/Web Local Remote")]
         public static void ShowWindow()
@@ -139,23 +144,24 @@ namespace WebLocalRemote
             
             _certPath = ProjectPrefs.GetString(PrefCertPath, "");
             _keyPath = ProjectPrefs.GetString(PrefKeyPath, "");
-            int savedPort = ProjectPrefs.GetInt(PrefPort, 8080);
+            int savedPort = ProjectPrefs.GetInt(PrefPort, DefaultPort);
             
             if (certField != null) certField.value = _certPath;
             if (keyField != null) keyField.value = _keyPath;
 
-            var portField = rootVisualElement.Q<IntegerField>("port-field");
-            if (portField != null)
+            _portField = rootVisualElement.Q<IntegerField>("port-field");
+            if (_portField != null)
             {
-                portField.value = savedPort;
-                portField.RegisterValueChangedCallback(evt =>
-                {
-                    int val = evt.newValue;
-                    if (val < 1024) val = 1024; // Well-known 포트 예약 방지
-                    if (val > 65535) val = 65535;
-                    portField.SetValueWithoutNotify(val);
-                    ProjectPrefs.SetInt(PrefPort, val);
-                });
+                // 키 입력마다 클램프하면 "8080"을 한 자리씩 칠 수 없으므로 Enter/포커스 아웃 시에만 확정
+                _portField.isDelayed = true;
+                _portField.value = savedPort;
+                _portField.RegisterValueChangedCallback(evt => SavePort(evt.newValue));
+            }
+
+            _resetPortBtn = rootVisualElement.Q<Button>("reset-port-btn");
+            if (_resetPortBtn != null)
+            {
+                _resetPortBtn.clicked += () => SavePort(DefaultPort);
             }
 
             if (rootVisualElement.Q<Button>("select-cert-btn") is Button btnCert)
@@ -331,7 +337,7 @@ namespace WebLocalRemote
             }
 
             string localIP = GetLocalIPAddress();
-            int port = ProjectPrefs.GetInt(PrefPort, 8080);
+            int port = ProjectPrefs.GetInt(PrefPort, DefaultPort);
 
             // 안전 장치: 혹시라도 이전에 비정상 종료되어 남아있는 Node.js 서버가 포트를 점유하고 있다면 종료 시도
             await StopOrphanedServer(port);
@@ -390,6 +396,13 @@ namespace WebLocalRemote
             }
         }
 
+        private void SavePort(int port)
+        {
+            port = Mathf.Clamp(port, MinPort, MaxPort);
+            _portField?.SetValueWithoutNotify(port);
+            ProjectPrefs.SetInt(PrefPort, port);
+        }
+
         private void UpdateStatusUI(bool isRunning)
         {
             if (_statusDot == null || _statusText == null || _toggleBtn == null) return;
@@ -400,6 +413,10 @@ namespace WebLocalRemote
 
             _toggleBtn.RemoveFromClassList("run-button");
             _toggleBtn.RemoveFromClassList("stop-button");
+
+            // 실행 중에는 포트를 바꿔도 적용되지 않으므로 잠금
+            _portField?.SetEnabled(!isRunning);
+            _resetPortBtn?.SetEnabled(!isRunning);
 
             if (isRunning)
             {
