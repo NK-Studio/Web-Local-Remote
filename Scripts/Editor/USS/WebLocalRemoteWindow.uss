@@ -1,228 +1,396 @@
-/* Root and Typography */
-.container {
+/* 창은 고정 크기(WebLocalRemoteWindow.WindowSize)다. 각 탭은 카드를 쌓고, 마지막 카드(.card-fill)가
+   남은 높이를 채운다. 간격은 4/8/12px. 색은 Unity 테마 변수와 반투명 값을 써서 라이트/다크 모두 맞춘다. */
+
+/* ── Root ─────────────────────────────────────────────────── */
+.wlr-root {
     flex-grow: 1;
+    /* 패키지에 든 IBM Plex Sans KR(창에 쓰는 글자만 남긴 서브셋, Fonts/subset-characters.txt).
+       기본 테마가 정하는 -unity-font-definition을 비워야 -unity-font가 적용된다. */
+    -unity-font-definition: initial;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-Regular-Subset.ttf");
     background-color: var(--unity-colors-window-background);
-    padding: 16px;
+    padding: 12px;
 }
 
-/* Header Section */
-.header-title-container {
+/* ── Header ───────────────────────────────────────────────── */
+.header {
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 2px;
-}
-
-.header-container {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     margin-bottom: 12px;
+    flex-shrink: 0;
 }
+.header-text {
+    flex-grow: 1;
+}
+.header-title {
+    font-size: 18px;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+    padding: 0;
+    margin: 0;
+}
+.header-title:hover { cursor: link; }
 .header-subtitle {
     font-size: 11px;
-    color: #999999;
-    margin-top: -2px;
-}
-
-/* ── 타이틀 ──────────────────────────────────────────────── */
-.TitleStyle {
-    -unity-text-align: middle-center;
-    font-size: 18px;
-    padding-left: 0;
-    padding-right: 0;
-    -unity-font-style: bold;
-}
-.TitleStyle:hover { cursor: link; }
-
-.icon-button {
-    background-color: transparent;
-    border-width: 0;
-    font-size: 14px;
-    padding: 2px;
-    cursor: link;
-}
-.icon-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-.settings-pos {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    opacity: 0.55;
+    padding: 0;
     margin: 0;
 }
 
-/* ── 그룹 박스 ───────────────────────────────────────────── */
-.GroupBoxStyle {
-    padding: 10px;
-    padding-left: 7px;
-    padding-right: 7px;
-    border-radius: 1px;
-    border-color: rgba(255, 255, 255, 0.2);
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    margin-left: 6px;
-    margin-right: 6px;
-    margin-bottom: 10px;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-#settings-view {
-}
-
-.GroupBoxStyle > Label {
-    -unity-font-style: bold;
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: #cccccc;
-}
-
-/* Status Indicator */
 .status-box {
     flex-direction: row;
     align-items: center;
-    background-color: rgba(0,0,0,0.2);
-    padding: 4px 8px;
-    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 4px 10px;
+    border-radius: 11px;
+    margin-right: 6px;
 }
-.status-text { font-size: 12px; color: #cccccc; margin-right: 6px; }
-.status-dot { width: 10px; height: 10px; border-radius: 5px; }
-.status-online { background-color: #66e070; }
-.status-offline { background-color: #888888; }
-.status-error { background-color: #ff5555; }
+.status-text { font-size: 11px; margin: 0 0 0 6px; padding: 0; }
+.status-dot { width: 8px; height: 8px; border-radius: 4px; }
+.status-online { background-color: #4cc75a; }
+.status-offline { background-color: #8a8a8a; }
+.status-error { background-color: #e5534b; }
 
-/* Separator */
-.separator {
-    height: 1px;
-    background-color: rgba(255,255,255,0.1);
-    margin-bottom: 16px;
+.icon-button {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border-radius: 12px;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+    font-size: 13px;
 }
+.icon-button:hover { background-color: rgba(128, 128, 128, 0.3); }
 
-/* Missing WebGL View */
-.missing-module-view {
-    padding: 20px;
-    background-color: rgba(255, 85, 85, 0.1);
-    border-color: #ff5555;
-    border-width: 1px;
-    border-radius: 8px;
-    align-items: center;
-    margin-bottom: 16px;
+/* ── Tabs ─────────────────────────────────────────────────── */
+.main-content {
+    flex-grow: 1;
 }
-.missing-module-title { font-size: 16px; -unity-font-style: bold; color: #ff6b6b; margin-bottom: 4px; }
-.missing-module-desc { font-size: 12px; color: #dddddd; white-space: normal; -unity-text-align: middle-center; }
-
-.main-content { 
-    flex-grow: 1; 
-}
-
-/* Build Path Group */
-.build-path-group {
+.tab-bar {
     flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    padding: 3px;
 }
-.build-path-field {
+.tab {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 0;
+    height: 26px;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0.7;
+}
+.tab:hover { background-color: rgba(128, 128, 128, 0.15); opacity: 1; }
+.tab-selected,
+.tab-selected:hover {
+    background-color: var(--unity-colors-button-background);
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+    opacity: 1;
+}
+
+.page {
+    flex-grow: 1;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.card {
+    flex-shrink: 0;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.25);
+    background-color: rgba(0, 0, 0, 0.08);
+}
+.card-fill {
     flex-grow: 1;
     flex-shrink: 1;
-    min-width: 50px;
-    margin-right: 8px;
+    margin-bottom: 0;
 }
-.build-path-field > .unity-base-field__input {
-    border-radius: 4px;
+.card-title {
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+.card-desc {
+    font-size: 11px;
+    white-space: normal;
+    opacity: 0.7;
+    margin: 4px 0 0 0;
+    padding: 0;
+}
+
+.field-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6px;
+}
+.field-label {
+    width: 40px;
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+}
+.path-field {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 40px;
+    margin: 0 4px 0 0;
+}
+.path-field > .unity-base-field__input {
     min-height: 22px;
 }
 
-/* Button Stylings */
+/* ── Buttons ──────────────────────────────────────────────── */
 .secondary-btn {
-    padding: 4px 12px;
-    background-color: #3a3a3a;
-    border-color: #4a4a4a;
+    height: 24px;
+    margin: 0;
+    padding: 0 10px;
     border-radius: 4px;
-    color: #eeeeee;
-    min-height: 24px;
     flex-shrink: 0;
 }
-.secondary-btn:hover { background-color: #4a4a4a; }
-
-#generate-cert-btn {
-    cursor: link;
+.grow-btn {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-left: 4px;
 }
+.grow-btn.first { margin-left: 0; }
+.square-btn {
+    width: 24px;
+    padding: 0;
+    margin-left: 2px;
+}
+.primary-btn { background-color: #2f7d4a; color: #ffffff; }
+.primary-btn:hover { background-color: #379457; }
+.danger-btn { color: #e5534b; font-size: 18px; padding-bottom: 2px; }
 
-.danger-btn { background-color: #5c2b2b; border-color: #8a3c3c; color: #ffaaaa; }
-.danger-btn:hover { background-color: #8a3c3c; }
-
-/* ── ButtonStyle ───────────────────────────────────── */
 .ButtonStyle {
-    font-size: 16px;
-    max-width: 480px;
-    min-height: 30px;
-    -unity-font-style: normal;
-    margin: 3px 5px;
-    margin-top: 6px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    width: 100%;
-    align-self: center;
+    height: 32px;
+    margin: 8px 0 0 0;
+    border-radius: 16px;
     border-width: 0;
+    font-size: 14px;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
     color: #ffffff;
 }
+.ButtonStyle:disabled { opacity: 0.5; }
+.run-button { background-color: #2f7fc1; }
+.run-button:hover { background-color: #3a8fd6; }
+.stop-button { background-color: #c9483d; }
+.stop-button:hover { background-color: #db5549; }
 
-.ButtonStyle:active { background-color: var(--unity-colors-default-background); }
-.ButtonStyle:disabled { background-color: rgba(0, 0, 0, 0.08); }
+.mirror-toggle {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 0 0 0 8px;
+}
+.mirror-toggle > Label {
+    min-width: 0;
+    flex-grow: 1;
+}
 
-.run-button { background-color: #2980b9; }
-.run-button:hover { background-color: #3498db; }
-.stop-button { background-color: #c0392b; border-color:#e74c3c; border-width: 2px;}
-.stop-button:hover { background-color: #e74c3c; }
-
-/* QR Code Section */
-.qr-box {
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 12px;
+/* ── QR ───────────────────────────────────────────────────── */
+.qr-center {
+    flex-grow: 1;
+    align-self: stretch;
     align-items: center;
     justify-content: center;
-    max-width: 220px;
-    align-self: center;
+}
+.url-text {
+    min-height: 18px;
+}
+.segmented {
+    flex-direction: row;
+    align-self: stretch;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 2px;
+}
+.segment {
+    flex-grow: 1;
+    flex-basis: 0;
+    height: 22px;
+    margin: 0;
+    border-width: 0;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 11px;
+    opacity: 0.7;
+}
+.segment:hover { background-color: rgba(128, 128, 128, 0.15); opacity: 1; }
+.segment-selected,
+.segment-selected:hover {
+    background-color: #2f7fc1;
+    color: #ffffff;
+    opacity: 1;
+}
+.segment:disabled { opacity: 0.35; }
+
+.qr-box {
+    width: 176px;
+    height: 176px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+.qr-box.qr-empty {
+    background-color: rgba(0, 0, 0, 0.12);
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.35);
 }
 .qr-image {
-    width: 200px;
-    height: 200px;
-    max-width: 100%;
-    max-height: 100%;
+    width: 160px;
+    height: 160px;
     -unity-background-scale-mode: scale-to-fit;
 }
-.qr-desc { font-size: 12px; color: #aaaaaa; margin-bottom: 8px; }
-.url-text { font-size: 14px; -unity-font-style: bold; color: #5dade2; }
+.qr-placeholder {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    font-size: 11px;
+    opacity: 0.6;
+}
+.url-text {
+    font-size: 13px;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+    color: #4ea3e0;
+    -unity-text-align: middle-center;
+    padding: 0;
+    margin: 0;
+}
 
-/* ── Help Box & Warnings ────────────────────────────────── */
-.help-box {
-    background-color: rgba(0, 120, 215, 0.1);
-    border-color: rgba(0, 120, 215, 0.3);
-    border-width: 1px;
+.info-text {
+    font-size: 11px;
+    white-space: normal;
+    padding: 6px;
+    margin: 6px 0 4px 0;
     border-radius: 4px;
-    padding: 8px;
-    margin-top: 12px;
-    margin-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.12);
 }
-.help-box-text {
+
+/* ── Results ──────────────────────────────────────────────── */
+.result-scroll {
+    flex-grow: 1;
+    margin-top: 6px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+.result-text {
     font-size: 11px;
-    color: #bbbbbb;
     white-space: normal;
+    padding: 6px;
+    margin: 0;
 }
+
+/* ── Warnings & Missing Module ────────────────────────────── */
 .ssl-warning {
-    color: #ff5555;
+    color: #e5534b;
     font-size: 11px;
-    -unity-font-style: bold;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
     white-space: normal;
+    margin: 6px 0 0 0;
 }
+.missing-module-view {
+    padding: 16px;
+    background-color: rgba(229, 83, 75, 0.1);
+    border-color: #e5534b;
+    border-width: 1px;
+    border-radius: 6px;
+    align-items: center;
+}
+.missing-module-title { font-size: 14px; -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf"); color: #e5534b; margin-bottom: 4px; }
+.missing-module-desc { font-size: 12px; white-space: normal; -unity-text-align: middle-center; }
+
+/* ── Dialog (WebLocalRemoteDialog) ────────────────────────── */
+/* rootVisualElement에 직접 붙으므로 .wlr-root의 폰트를 다시 지정한다. */
+.dialog-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 24px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.55);
+    -unity-font-definition: initial;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-Regular-Subset.ttf");
+}
+.dialog-card {
+    width: 100%;
+    max-height: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.35);
+    border-top-width: 3px;
+    background-color: var(--unity-colors-window-background);
+}
+.dialog-info { border-top-color: #2f7fc1; }
+.dialog-success { border-top-color: #4cc75a; }
+.dialog-warning { border-top-color: #e0a63a; }
+.dialog-error { border-top-color: #e5534b; }
+
+.dialog-header {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+}
+.dialog-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+.dialog-title {
+    flex-shrink: 1;
+    font-size: 14px;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+    white-space: normal;
+    padding: 0;
+    margin: 0;
+}
+.dialog-body {
+    flex-shrink: 1;
+}
+.dialog-message {
+    font-size: 12px;
+    white-space: normal;
+    padding: 0;
+    margin: 0;
+}
+.dialog-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    margin-top: 14px;
+}
+.dialog-btn {
+    min-width: 72px;
+    height: 26px;
+    margin: 0 0 0 6px;
+    padding: 0 12px;
+    border-radius: 4px;
+}
+.dialog-btn-primary {
+    background-color: #2f7fc1;
+    color: #ffffff;
+    border-width: 0;
+    -unity-font: url("../../../Fonts/IBMPlexSansKR-SemiBold-Subset.ttf");
+}
+.dialog-btn-primary:hover { background-color: #3a8fd6; }
