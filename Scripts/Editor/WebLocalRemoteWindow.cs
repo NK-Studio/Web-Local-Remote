@@ -380,10 +380,29 @@ namespace WebLocalRemote
             }
 
             string localIP = GetLocalIPAddress();
-            int port = ProjectPrefs.GetInt(PrefPort, DefaultPort);
+            int wantedPort = ProjectPrefs.GetInt(PrefPort, DefaultPort);
 
             // 안전 장치: 혹시라도 이전에 비정상 종료되어 남아있는 Node.js 서버가 포트를 점유하고 있다면 종료 시도
-            await StopOrphanedServer(port);
+            if (!DeviceTools.IsPortFree(wantedPort)) await StopOrphanedServer(wantedPort);
+
+            // 그래도 다른 프로그램이 쓰고 있으면 다음 빈 포트로 켜고, 그 포트를 저장해 다음에도 같은 주소를 쓴다.
+            int port = DeviceTools.FindFreePort(wantedPort, MaxPort);
+            string portNotice = null;
+            if (port < 0)
+            {
+                ShowDialog(WebLocalRemoteDialog.Kind.Error, "Web Local Remote",
+                    $"{wantedPort} 포트부터 비어 있는 포트를 찾지 못했습니다. 설정 탭에서 다른 포트를 지정해 주세요.");
+                UpdateStatusUI(false);
+                _toggleBtn.SetEnabled(true);
+                return;
+            }
+            if (port != wantedPort)
+            {
+                string changed = $"{wantedPort} 포트는 이미 사용 중이라 {port} 포트로 켰습니다.";
+                portNotice = changed + $"\n다음에도 {port} 포트를 사용합니다.";
+                Debug.LogWarning("[WebLocalRemote] " + changed);
+                SavePort(port);
+            }
 
             // 자동 생성한 인증서라면 지금 네트워크 주소가 SAN에 들어 있는지 확인하고 필요하면 다시 발급
             if (LocalCertificates.IsManaged(_certPath, _keyPath) && !LocalCertificates.RefreshIfNeeded(out string certError))
@@ -420,7 +439,18 @@ namespace WebLocalRemote
             if (_serverProcess != null)
             {
                 ProjectPrefs.SetInt(PrefPid, _serverProcess.Id);
-                
+
+                // 서버가 스스로 끝나면(포트 충돌 등) 창을 Offline으로 되돌린다.
+                var started = _serverProcess;
+                started.EnableRaisingEvents = true;
+                started.Exited += (s, e) => EditorApplication.delayCall += () =>
+                {
+                    if (_serverProcess != started) return;
+                    _serverProcess = null;
+                    ProjectPrefs.DeleteKey(PrefPid);
+                    UpdateStatusUI(false);
+                };
+
                 _serverProcess.ErrorDataReceived += (s, e) =>
                 {
                     if (!string.IsNullOrEmpty(e.Data)) Debug.LogError($"[Server Error]: {e.Data}");
@@ -438,6 +468,7 @@ namespace WebLocalRemote
                 // UI 마무리
                 _statusText.text = "Server Running";
                 _toggleBtn.SetEnabled(true);
+                if (portNotice != null) ShowDialog(WebLocalRemoteDialog.Kind.Info, "포트 변경", portNotice);
             }
             else
             {

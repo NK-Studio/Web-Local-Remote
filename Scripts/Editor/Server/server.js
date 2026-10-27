@@ -712,6 +712,12 @@ if (certPath && keyPath && fs.existsSync(certPath) && fs.existsSync(keyPath)) {
     server = http.createServer(requestHandler);
 }
 
+// 창이 빈 포트를 고른 뒤 그사이 다른 프로그램이 잡았을 때: 조용히 죽지 않고 이유를 남긴다.
+server.on('error', (err) => {
+    console.error(err.code === 'EADDRINUSE' ? `Port ${port} is already in use.` : `Server error: ${err.message}`);
+    process.exit(1);
+});
+
 server.listen(port, '0.0.0.0', () => {
     console.log(`NK Studio Web Local Remote Server running at ${protocol}://0.0.0.0:${port}/ (${os.hostname()})`);
     console.log(`Remote console: ${protocol}://localhost:${port}${WLR}`);

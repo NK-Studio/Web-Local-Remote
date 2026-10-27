@@ -6,8 +6,10 @@
     pip install fonttools
     python3 Tools~/subset_font.py /path/to/IBM_Plex_Sans_KR
 """
+import re
 import sys
 import unicodedata
+import uuid
 from pathlib import Path
 
 from fontTools import subset
@@ -51,6 +53,11 @@ def main() -> None:
         subsetter.subset(font)
         out = fonts / f"IBMPlexSansKR-{weight}-Subset.ttf"
         font.save(out)
+        # 글자 번호가 바뀐 폰트를 같은 GUID로 덮으면 에디터가 예전 글자표를 계속 써서 글자가 뒤섞인다
+        # (도메인 리로드로도 안 풀림). 새 GUID를 주면 새 폰트로 읽는다. USS는 경로로 가리키므로 그대로 둔다.
+        meta = out.with_name(out.name + ".meta")
+        if meta.exists():
+            meta.write_text(re.sub(r"guid: [0-9a-f]{32}", f"guid: {uuid.uuid4().hex}", meta.read_text()))
         print(f"{out.name}: {out.stat().st_size // 1024} KB")
 
     hangul = sum(1 for c in kept if 0xAC00 <= ord(c) <= 0xD7A3)

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-27
+### Fixed
+- 설정한 포트를 다른 프로그램이 쓰고 있으면(127.0.0.1에만 묶인 것 포함) 서버가 켜지지 않거나, 폰의 `localhost`(adb reverse)가 그 프로그램으로 가던 문제. 이제 다음 빈 포트(최대 +50)로 켜서 알리고, 그 포트를 저장해 다음에도 같은 주소를 쓴다. 폰 브라우저의 카메라 권한이 origin 단위라 랜덤 포트는 쓰지 않는다.
+- 이전 서버를 끄는 stop 요청을 포트가 사용 중일 때만 보낸다.
+- 서버가 스스로 끝나면(포트 충돌 등) 창을 Offline으로 되돌리고, 서버가 이유를 남긴다.
+- 서브셋 폰트를 다시 만들면 열려 있던 에디터에서 글자가 다른 글자로 뒤섞여 보이던 문제. `Tools~/subset_font.py`가 폰트에 새 GUID를 준다.
+
 ## [1.1.0] - 2026-10-26
 ### Added
 - 원격 콘솔: 서버가 빌드의 HTML에 작은 스크립트를 넣어 폰의 `console` 로그, 오류, 처리되지 않은 Promise, 기기 정보를 PC로 보낸다. Android와 iPhone 모두 케이블 없이 `/__wlr/` 대시보드에서 실시간으로 보고, 선택한 기기에서 JS를 실행할 수 있다.

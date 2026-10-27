@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using UnityEditor;
 using UnityEngine;
 
@@ -135,6 +137,40 @@ namespace WebLocalRemote
 #endif
             message = ok ? "이 컴퓨터가 루트 CA를 신뢰합니다. 브라우저를 다시 열면 적용됩니다." : "등록하지 못했습니다.\n" + output;
             return ok;
+        }
+
+        // 서버는 0.0.0.0에서 듣지만 다른 프로그램이 127.0.0.1에만 묶여 있어도 폰의 localhost(adb reverse)와
+        // 원격 콘솔은 그쪽으로 간다. 그래서 두 주소 모두 비어 있어야 빈 포트로 본다.
+        internal static bool IsPortFree(int port)
+        {
+            foreach (var address in new[] { IPAddress.Loopback, IPAddress.Any })
+            {
+                var listener = new TcpListener(address, port);
+                try
+                {
+                    listener.Start();
+                }
+                catch (SocketException)
+                {
+                    return false;
+                }
+                finally
+                {
+                    listener.Stop();
+                }
+            }
+            return true;
+        }
+
+        // 원하는 포트부터 차례로 빈 포트를 찾는다. 포트가 매번 바뀌면 폰 브라우저의 카메라 권한(origin 단위)이
+        // 초기화되므로 랜덤이 아니라 가까운 번호를 쓴다. 못 찾으면 -1.
+        internal static int FindFreePort(int wanted, int maxPort)
+        {
+            for (int port = wanted; port <= Math.Min(wanted + 50, maxPort); port++)
+            {
+                if (IsPortFree(port)) return port;
+            }
+            return -1;
         }
 
         private static bool Start(string file, string args)
